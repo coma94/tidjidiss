@@ -12,17 +12,19 @@ tgds = list()
 
 def p_start(p):
     'start : SOURCE schema_source TARGET schema_target MAPPING tgds'
-    p[0] = (source, target, tgds)
+    p[0] = (p[2], p[4], p[6])
 
 def p_schema_source(p):
     '''schema_source : relation schema_source
                      | relation'''
     source.append(p[1])
+    p[0] = source
 
 def p_schema_target(p):
     '''schema_target : relation schema_target
                      | relation'''
     target.append(p[1])
+    p[0] = target
 
 def p_relation(p):
     'relation : NAME P_OPEN atts P_CLOSE'
@@ -41,6 +43,7 @@ def p_tgds(p):
     '''tgds : tgd tgds
          | tgd'''
     tgds.append(p[1])
+    p[0] = tgds
 
 #left/tight to know where to search the relations
 def p_tgd(p):
@@ -100,7 +103,7 @@ def p_args(p):
 
 def p_value(p):
     '''value : VARIABLE
-          | CONSTANT'''
+             | CONSTANT'''
     if p[1][0] == '$':
         p[0] = p[1]
     else:
@@ -118,6 +121,9 @@ def parse(file):
     with open(file, 'r+') as f:
         data = f.read()
         result = parser.parse(data)
+        source.reverse()
+        target.reverse()
+        tgds.reverse()
 
 if __name__ == '__main__':
     parse("examples/example-input-file.txt")
