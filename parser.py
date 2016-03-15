@@ -15,13 +15,13 @@ def p_start(p):
     pass
 
 def p_schema_source(p):
-    'schema: relation schema
-           | relation'
+    '''schema: relation schema
+           | relation'''
     source.append(p[1])
 
 def p_schema_target(p):
-    'schema: relation schema
-           | relation'
+    '''schema: relation schema
+           | relation'''
     target.append(p[1])
 
 def p_relation(p):
@@ -30,8 +30,8 @@ def p_relation(p):
     p[0] = rel
 
 def p_atts(p):
-    'atts: NAME COMMA atts
-         | NAME'
+    '''atts: NAME COMMA atts
+         | NAME'''
     if len(p) == 4:
         l = p[3]
         l.append(p[1])
@@ -41,8 +41,8 @@ def p_atts(p):
         p[0] = l
 
 def p_tgds(p):
-    'tgds: tgd tgds
-         | tgd'
+    '''tgds: tgd tgds
+         | tgd'''
     tgds.append(p[1])
 
 #left/tight to know where to search the relations
@@ -52,8 +52,8 @@ def p_tgd(p):
     p[0] = tgd
 
 def p_left_query(p):
-    'left_query: left_atom COMMA left_query
-          | left_atom'
+    '''left_query: left_atom COMMA left_query
+          | left_atom'''
     if len(p) == 4:
         l = p[3]
         l.append(p[1])
@@ -63,8 +63,8 @@ def p_left_query(p):
         p[0] = l
 
 def p_right_query(p):
-    'right_query: right_atom COMMA right_query
-          | left_atom'
+    '''right_query: right_atom COMMA right_query
+          | left_atom'''
     if len(p) == 4:
         l = p[3]
         l.append(p[1])
@@ -100,8 +100,8 @@ def p_right_atom(p):
         print("ERROR: no relation named", p[1], "in target")
 
 def p_args(p):
-    'args: value COMMA args
-         | value'
+    '''args: value COMMA args
+         | value'''
     if len(p) == 4:
         l = p[3]
         l.append(p[1])
@@ -111,8 +111,8 @@ def p_args(p):
         p[0] = l
 
 def p_value(p):
-    'value: VARIABLE
-          | CONSTANT'
+    '''value: VARIABLE
+          | CONSTANT'''
     if p[1][0] == '$':
         p[0] = p[1]
     else:
