@@ -11,7 +11,7 @@ tgds = list()
 
 
 def p_start(p):
-    'start: SOURCE schema_source TARGET schema_target MAPPING tgds'
+    'start : SOURCE schema_source TARGET schema_target MAPPING tgds'
     pass
 
 def p_schema_source(p):
@@ -86,7 +86,7 @@ def p_left_atom(p):
     if not found:
         print("ERROR: no relation named", p[1], "in source")
 
-Right atom of tgds. Search the relations in the target schema.
+#Right atom of tgds. Search the relations in the target schema.
 def p_right_atom(p):
     'right_atom : name P_OPEN args P_CLOSE'
     found = False
