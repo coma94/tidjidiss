@@ -46,8 +46,10 @@ def t_error(t):
     """."""
     raise TypeError("Unknown text '%s'" % (t.value,))
 
+lexer = lex.lex()
 
-def lex(file):
+
+def do_lex(file):
     """."""
     with open(file, 'r+') as f:
         data = f.read()
@@ -57,4 +59,4 @@ def lex(file):
             print(repr(tok.type), repr(tok.value))
 
 if __name__ == '__main__':
-    lex("examples/example-input-file.txt")
+    do_lex("examples/example-input-file.txt")

@@ -15,17 +15,17 @@ def p_start(p):
     pass
 
 def p_schema_source(p):
-    '''schema : relation schema
-           | relation'''
+    '''schema_source : relation schema_source
+                     | relation'''
     source.append(p[1])
 
 def p_schema_target(p):
-    '''schema : relation schema
-           | relation'''
+    '''schema_target : relation schema_target
+                     | relation'''
     target.append(p[1])
 
 def p_relation(p):
-    'relation : name P_OPEN atts P_CLOSE'
+    'relation : NAME P_OPEN atts P_CLOSE'
     rel = Relation(p[1], p[3])
     p[0] = rel
 
@@ -47,7 +47,7 @@ def p_tgds(p):
 
 #left/tight to know where to search the relations
 def p_tgd(p):
-    'tgd : left_query ARROW right_query'
+    'tgd : left_query ARROW right_query FULLSTOP'
     tgd = Mapping(p[1], p[3])
     p[0] = tgd
 
@@ -75,7 +75,7 @@ def p_right_query(p):
 
 # Left atom of tgds. Search the relations in the source schema.
 def p_left_atom(p):
-    'left_atom : name P_OPEN args P_CLOSE'
+    'left_atom : NAME P_OPEN args P_CLOSE'
     found = False
     for rel in source:
         if rel.name == p[1]:
@@ -88,7 +88,7 @@ def p_left_atom(p):
 
 #Right atom of tgds. Search the relations in the target schema.
 def p_right_atom(p):
-    'right_atom : name P_OPEN args P_CLOSE'
+    'right_atom : NAME P_OPEN args P_CLOSE'
     found = False
     for rel in target:
         if rel.name == p[1]:
