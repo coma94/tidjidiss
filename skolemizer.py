@@ -11,9 +11,11 @@ def skolemize(mappings):
     for i, mapping in enumerate(mappings):
         skol_lhs = mapping.lhs
         skol_rhs = []
-        universal_variables = set()
+        universal_variables = []
         for instance in mapping.lhs:
-            universal_variables.update(instance.variables)
+            new_variables =\
+                [var for var in instance.variables if var not in universal_variables]
+            universal_variables.extend(new_variables)
         for instance in mapping.rhs:
             skol_variables = []
             for var in instance.variables:
