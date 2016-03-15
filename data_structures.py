@@ -1,21 +1,26 @@
 """."""
 
 
-class Schema:
+class Schema(list):
     # relations = [Relation1, Relation2, ..]
-    pass
+    def __init__(self, *args):
+        list.__init__(self, *args)
 
 
 class Relation:
     # name
     # fields = [Field1, Field2, ...]
-    pass
+    def __init__(self, name, attributes):
+        self.name = name
+        self.fields = attributes
 
 
 class RelationInstance:
     # relation = Relation()
     # variables = [VarName1, VarName2, ..] position is important!!!
-    pass
+    def __init__(self, relation, variables):
+        self.relation = relation
+        self.variables = variables
 
 
 class Mapping:
@@ -24,7 +29,9 @@ class Mapping:
     # rhs = [RelationInstance1, RelationInstance2, ...] - conjunction of these
     # relations
     # lhs = same
-    pass
+    def __init__(self, rhs, lhs):
+        self.rhs = rhs
+        self.lhs = lhs
 
 
 class SkolemTerm:

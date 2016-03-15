@@ -47,7 +47,7 @@ def t_error(t):
     raise TypeError("Unknown text '%s'" % (t.value,))
 
 
-def parse(file):
+def lex(file):
     """."""
     with open(file, 'r+') as f:
         data = f.read()
@@ -57,4 +57,4 @@ def parse(file):
             print(repr(tok.type), repr(tok.value))
 
 if __name__ == '__main__':
-    parse("examples/example-input-file.txt")
+    lex("examples/example-input-file.txt")
