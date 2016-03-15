@@ -15,22 +15,22 @@ def p_start(p):
     pass
 
 def p_schema_source(p):
-    '''schema: relation schema
+    '''schema : relation schema
            | relation'''
     source.append(p[1])
 
 def p_schema_target(p):
-    '''schema: relation schema
+    '''schema : relation schema
            | relation'''
     target.append(p[1])
 
 def p_relation(p):
-    'relation: name P_OPEN atts P_CLOSE'
+    'relation : name P_OPEN atts P_CLOSE'
     rel = Relation(p[1], p[3])
     p[0] = rel
 
 def p_atts(p):
-    '''atts: NAME COMMA atts
+    '''atts : NAME COMMA atts
          | NAME'''
     if len(p) == 4:
         l = p[3]
@@ -41,18 +41,18 @@ def p_atts(p):
         p[0] = l
 
 def p_tgds(p):
-    '''tgds: tgd tgds
+    '''tgds : tgd tgds
          | tgd'''
     tgds.append(p[1])
 
 #left/tight to know where to search the relations
 def p_tgd(p):
-    'tgd: left_query ARROW right_query'
+    'tgd : left_query ARROW right_query'
     tgd = Mapping(p[1], p[3])
     p[0] = tgd
 
 def p_left_query(p):
-    '''left_query: left_atom COMMA left_query
+    '''left_query : left_atom COMMA left_query
           | left_atom'''
     if len(p) == 4:
         l = p[3]
@@ -63,7 +63,7 @@ def p_left_query(p):
         p[0] = l
 
 def p_right_query(p):
-    '''right_query: right_atom COMMA right_query
+    '''right_query : right_atom COMMA right_query
           | left_atom'''
     if len(p) == 4:
         l = p[3]
@@ -73,9 +73,9 @@ def p_right_query(p):
         l = list(p[1])
         p[0] = l
 
+# Left atom of tgds. Search the relations in the source schema.
 def p_left_atom(p):
-    """Left atom of tgds. Search the relations in the source schema."""
-    'left_atom: name P_OPEN args P_CLOSE'
+    'left_atom : name P_OPEN args P_CLOSE'
     found = False
     for rel in source:
         if rel.name == p[1]:
@@ -86,9 +86,9 @@ def p_left_atom(p):
     if not found:
         print("ERROR: no relation named", p[1], "in source")
 
+Right atom of tgds. Search the relations in the target schema.
 def p_right_atom(p):
-    """Right atom of tgds. Search the relations in the target schema."""
-    'right_atom: name P_OPEN args P_CLOSE'
+    'right_atom : name P_OPEN args P_CLOSE'
     found = False
     for rel in target:
         if rel.name == p[1]:
@@ -100,7 +100,7 @@ def p_right_atom(p):
         print("ERROR: no relation named", p[1], "in target")
 
 def p_args(p):
-    '''args: value COMMA args
+    '''args : value COMMA args
          | value'''
     if len(p) == 4:
         l = p[3]
@@ -111,7 +111,7 @@ def p_args(p):
         p[0] = l
 
 def p_value(p):
-    '''value: VARIABLE
+    '''value : VARIABLE
           | CONSTANT'''
     if p[1][0] == '$':
         p[0] = p[1]
