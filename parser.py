@@ -117,15 +117,14 @@ def p_error(p):
 
 parser = yacc.yacc()
 
-def parse(file):
-    with open(file, 'r+') as f:
-        data = f.read()
-        result = parser.parse(data)
-        source.reverse()
-        target.reverse()
-        tgds.reverse()
+def parse(data):
+    parser.parse(data)
+    source.reverse()
+    target.reverse()
+    tgds.reverse()
 
 if __name__ == '__main__':
-    parse("examples/example-input-file.txt")
-
-
+    file = "examples/example-input-file.txt"
+    with open(file, 'r+') as f:
+        data = f.read()
+        parser.parse(data)
