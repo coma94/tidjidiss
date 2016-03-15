@@ -29,9 +29,9 @@ class Mapping:
     # rhs = [RelationInstance1, RelationInstance2, ...] - conjunction of these
     # relations
     # lhs = same
-    def __init__(self, rhs, lhs):
-        self.rhs = rhs
+    def __init__(self, lhs, rhs):
         self.lhs = lhs
+        self.rhs = rhs
 
 
 class SkolemTerm:

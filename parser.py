@@ -26,7 +26,7 @@ def p_schema_target(p):
 
 def p_relation(p):
     'relation : NAME P_OPEN atts P_CLOSE'
-    rel = Relation(p[1], p[3])
+    rel = Relation(p[1], p[3][::-1])
     p[0] = rel
 
 def p_atts(p):
@@ -45,7 +45,7 @@ def p_tgds(p):
 #left/tight to know where to search the relations
 def p_tgd(p):
     'tgd : left_query ARROW right_query FULLSTOP'
-    tgd = Mapping(p[1], p[3])
+    tgd = Mapping(p[1][::-1], p[3][::-1])
     p[0] = tgd
 
 def p_left_query(p):
@@ -58,7 +58,7 @@ def p_left_query(p):
 
 def p_right_query(p):
     '''right_query : right_atom COMMA right_query
-                   | left_atom'''
+                   | right_atom'''
     p[0] = []
     if len(p) == 4:
         p[0] = p[3]
@@ -71,7 +71,7 @@ def p_left_atom(p):
     for rel in source:
         if rel.name == p[1]:
             found = True
-            p[0] = RelationInstance(rel, p[3])
+            p[0] = RelationInstance(rel, p[3][::-1])
             break
     
     if not found:
@@ -84,7 +84,7 @@ def p_right_atom(p):
     for rel in target:
         if rel.name == p[1]:
             found = True
-            p[0] = RelationInstance(rel, p[3])
+            p[0] = RelationInstance(rel, p[3][::-1])
             break
     
     if not found:
