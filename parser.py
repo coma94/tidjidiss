@@ -12,7 +12,7 @@ tgds = list()
 
 def p_start(p):
     'start : SOURCE schema_source TARGET schema_target MAPPING tgds'
-    pass
+    p[0] = (source, target, tgds)
 
 def p_schema_source(p):
     '''schema_source : relation schema_source
