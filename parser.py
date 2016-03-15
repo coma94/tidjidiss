@@ -31,14 +31,11 @@ def p_relation(p):
 
 def p_atts(p):
     '''atts : NAME COMMA atts
-         | NAME'''
+            | NAME'''
+    p[0] = []
     if len(p) == 4:
-        l = p[3]
-        l.append(p[1])
-        p[0] = l
-    else:
-        l = list(p[1])
-        p[0] = l
+        p[0] = p[3]
+    p[0].append(p[1])
 
 def p_tgds(p):
     '''tgds : tgd tgds
@@ -53,25 +50,19 @@ def p_tgd(p):
 
 def p_left_query(p):
     '''left_query : left_atom COMMA left_query
-          | left_atom'''
+                  | left_atom'''
+    p[0] = []
     if len(p) == 4:
-        l = p[3]
-        l.append(p[1])
-        p[0] = l
-    else:
-        l = list(p[1])
-        p[0] = l
+        p[0] = p[3]
+    p[0].append(p[1])
 
 def p_right_query(p):
     '''right_query : right_atom COMMA right_query
-          | left_atom'''
+                   | left_atom'''
+    p[0] = []
     if len(p) == 4:
-        l = p[3]
-        l.append(p[1])
-        p[0] = l
-    else:
-        l = list(p[1])
-        p[0] = l
+        p[0] = p[3]
+    p[0].append(p[1])
 
 # Left atom of tgds. Search the relations in the source schema.
 def p_left_atom(p):
@@ -102,13 +93,10 @@ def p_right_atom(p):
 def p_args(p):
     '''args : value COMMA args
          | value'''
+    p[0] = []
     if len(p) == 4:
-        l = p[3]
-        l.append(p[1])
-        p[0] = l
-    else:
-        l = list(p[1])
-        p[0] = l
+        p[0] = p[3]
+    p[0].append(p[1])
 
 def p_value(p):
     '''value : VARIABLE
