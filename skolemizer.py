@@ -1,4 +1,5 @@
-"""."""
+"""The utils for skolemization of tgds."""
+
 from data_structures import SkolemizedMapping
 from data_structures import SkolemTerm
 from data_structures import RelationInstance
@@ -14,7 +15,8 @@ def skolemize(mappings):
         universal_variables = []
         for instance in mapping.lhs:
             new_variables =\
-                [var for var in instance.variables if var not in universal_variables]
+                [var for var in instance.variables
+                    if var not in universal_variables]
             universal_variables.extend(new_variables)
         for instance in mapping.rhs:
             skol_variables = []
@@ -23,7 +25,8 @@ def skolemize(mappings):
                     # TODO: now we make skolem term depend on all universal
                     # variables but later change to depend only ones from rhs
                     # ORDER OF ARGUMENTS IS NOT PRESERVED
-                    skol_term = SkolemTerm("m%d" % (i+1), var, universal_variables)
+                    skol_term = SkolemTerm(
+                        "m%d" % (i + 1), var, universal_variables)
                     skol_variables.append(skol_term)
                 else:
                     skol_variables.append(var)

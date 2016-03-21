@@ -1,4 +1,5 @@
-"""."""
+"""Pareser of specified input format."""
+
 import ply.yacc as yacc
 from lexer import tokens
 

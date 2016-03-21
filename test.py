@@ -1,4 +1,5 @@
 """Test implemeted scripts."""
+
 from input_parser import parse
 # from parser import source
 # from parser import target
@@ -8,7 +9,7 @@ from sql_generator import generate_sql
 
 
 if __name__ == '__main__':
-    file = "examples/example-input-file.txt"
+    file = "examples/homework_example.txt"
     with open(file, 'r+') as f:
         data = f.read()
         parse(data)

@@ -1,5 +1,4 @@
-
-"""."""
+"""The utils for SQL statements generation."""
 
 
 def find_named_variables(mapping):
@@ -19,12 +18,12 @@ def find_named_variables(mapping):
 
 
 def format_field(relation_name, field):
-    """."""
+    """Util for formatting relation name and field into sql syntax."""
     return "%s.%s" % (relation_name, field)
 
 
 def generate_insertion_tuple(mapping):
-    """."""
+    """For the given mapping generate insertion tuple."""
     # we need to find from mappings the dictionary
     # { variable_name: (relation_name, field) }
     named_variables = find_named_variables(mapping)
@@ -43,7 +42,9 @@ def generate_insertion_tuple(mapping):
                     format_field(named_variables[variable][0][0],
                                  named_variables[variable][0][1]))
             else:
-                skolem_list = [" || %s.%s || " % (named_variables[arg][0][0], named_variables[arg][0][1]) for arg in variable.arguments]
+                skolem_list = [" || %s.%s || " % (
+                    named_variables[arg][0][0],
+                    named_variables[arg][0][1]) for arg in variable.arguments]
                 skolem_term = "\',\'".join(skolem_list)
                 selection_attributes.append(
                     "\'f[%s,%s](\' %s \')\'" %
@@ -70,7 +71,7 @@ def generate_insertion_tuple(mapping):
 
 
 def generate_sql(mappings):
-    """."""
+    """Generate INSERT statement for the set of tgds."""
     statement_template =\
         "INSERT INTO %s\n SELECT %s \n FROM %s;\n"
     sql_statements = []
