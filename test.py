@@ -1,9 +1,10 @@
 """Test implemeted scripts."""
-from parser import parse
+from input_parser import parse
 # from parser import source
 # from parser import target
-from parser import tgds
+from input_parser import tgds
 from skolemizer import skolemize
+from sql_generator import generate_sql
 
 
 if __name__ == '__main__':
@@ -30,3 +31,5 @@ if __name__ == '__main__':
                             var.variable,
                             ",".join(var.arguments)))
             print("\n")
+        sql = generate_sql(skolemized_tgds)
+        print(sql)
