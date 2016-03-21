@@ -117,6 +117,7 @@ def p_error(p):
 
 parser = yacc.yacc()
 
+
 def parse(data):
     parser.parse(data)
     source.reverse()
