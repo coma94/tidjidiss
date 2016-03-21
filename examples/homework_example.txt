@@ -1,0 +1,16 @@
+SOURCE
+NYSE(Name, Symbol)
+PublicCompany(Name, City)
+PublicGrant(Amount, Investigator, Company)
+NSFGrantee(Id, Name, Symbol)
+NSFGrant(Amount, Company)
+
+TARGET
+Company(Id, Name, Symbol)
+Grant(Amount, Company)
+
+MAPPING
+NYSE($s, $n) -> Company($i, $n, $s).
+PublicCompany($n, $c), PublicGrant($a, $pi, $n) -> Company($i, $n, $s), Grant($a, $i).
+NSFGrantee($i, $n, $s) -> Company($i, $n, $s).
+NSFGrant($a, $c) -> Grant($a, $c).
