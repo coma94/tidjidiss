@@ -2,7 +2,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
-\usepackage[francais]{babel}
+\usepackage[english]{babel}
 
 \title{{\Huge Tidjidiss}\\
 Project report}
@@ -13,6 +13,12 @@ Project report}
 \maketitle
 
 \section{Introduction}
+\textit{Tidjidiss} project is an implementation of a tiny SQL-based exchange engine.
+
+This engine takes as input some database, which structure follows a \textit{source schema}. It transforms this database into a new one, which structure follows a \textit{target schema}, and the data of the target database is generated from the source using a set of first order formulas, which impose some relations and constraints over the data of target database. These formulas are called \textit{source-to-target tuple-generating dependencies} (s-t tgds).
+
+It is a SQL-based engine, which means that it generates the SQL code transforming the source database into the target one. It also have an integrated mode, that directly interacts with some SQLite database and perform the transformation.
+
 \section{Usage}
 \section{Data structures}
 \section{Parsing of the input}
