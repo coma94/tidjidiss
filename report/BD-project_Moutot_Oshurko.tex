@@ -13,15 +13,21 @@ Project report}
 \maketitle
 
 \section{Introduction}
-\textit{Tidjidiss} project is an implementation of a tiny SQL-based exchange engine.
+\textit{Tidjidiss} project is a Python implementation of a tiny SQL-based exchange engine.
 
-This engine takes as input some database, which structure follows a \textit{source schema}. It transforms this database into a new one, which structure follows a \textit{target schema}, and the data of the target database is generated from the source using a set of first order formulas, which impose some relations and constraints over the data of target database. These formulas are called \textit{source-to-target tuple-generating dependencies} (s-t tgds).
+This engine takes as input some database, which structure follows a \textit{source schema}. It transforms this database into a new one, which structure must follows a \textit{target schema}. The correspondance between source and target data is made using a set of first order formulas, which impose some relations and constraints over the data of target database. These formulas are called \textit{source-to-target tuple-generating dependencies} (s-t tgds).
 
 It is a SQL-based engine, which means that it generates the SQL code transforming the source database into the target one. It also have an integrated mode, that directly interacts with some SQLite database and perform the transformation.
 
 \section{Usage}
 \section{Data structures}
 \section{Parsing of the input}
+The input is a file formatted in a specific format, defined a precise grammar in the assignment. To parse this input, we use a python implementation of lex/yacc. Two files are here fot the parsing :
+\begin{enumeration} 
+  \item lexer.py : it creates the stream of tokens, using regular expression to detect trivial expressions (such as keywords, commas, arrows, names, variables,... ). 
+  \item input_parser.py : it parses the token flow using the given grammars, and fill the data structures defined below with the data of the input file. 
+\end{enumeration} 
+
 \section{Skolemisation}
 \section{SQL generation}
 \section{sqlite3 integration}
