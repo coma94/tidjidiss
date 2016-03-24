@@ -20,13 +20,23 @@ This engine takes as input some database, which structure follows a \textit{sour
 It is a SQL-based engine, which means that it generates the SQL code transforming the source database into the target one. It also have an integrated mode, that directly interacts with some SQLite database and perform the transformation.
 
 \section{Usage}
+First of all, you need to install the library \textit{ply} by running \texttt{pip3 install ply} in root (or \texttt{sudo pip3 install ply}).
+
+When it's done, just execute the script \textbf{tidjidiss.py} by running \texttt{python3 tidjidiss.py}. It takes in the input file in the standard input, so you could give to it an input file using command line:\\
+\texttt{python3 tidjidiss.py < examples/example-input-file.txt}\\
+The output is the generated SQL script.
+
+To run the sqlite3 integration, just use the \texttt{-sqlite3} argument followed by the name of the database:\\
+\texttt{python3 tidjidiss.py -sqlite3 database.db < examples/example-input-file.txt}\\
+It will print and execute the generated script on the database, which must contains tables following the \textit{source} schema.
+
 \section{Data structures}
 \section{Parsing of the input}
 The input is a file formatted in a specific format, defined a precise grammar in the assignment. To parse this input, we use a python implementation of lex/yacc. Two files are here fot the parsing :
-\begin{enumeration} 
-  \item lexer.py : it creates the stream of tokens, using regular expression to detect trivial expressions (such as keywords, commas, arrows, names, variables,... ). 
-  \item input_parser.py : it parses the token flow using the given grammars, and fill the data structures defined below with the data of the input file. 
-\end{enumeration} 
+\begin{itemize} 
+  \item [lexer.py] : it creates the stream of tokens, using regular expression to detect trivial expressions (such as keywords, commas, arrows, names, variables,... ). 
+  \item [input\_parser.py] : it parses the token flow using the given grammars, and fill the data structures defined below with the data of the input file. 
+\end{itemize} 
 
 \section{Skolemisation}
 \section{SQL generation}
