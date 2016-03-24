@@ -80,3 +80,10 @@ def generate_sql(mappings):
         sql = statement_template % insertion_tuple
         sql_statements.append(sql)
     return "\n".join(sql_statements)
+
+
+def generate_target(target):
+    sql = ""
+    for relation in target:
+        sql += "CREATE TABLE %s (%s);\n" % (relation.name, ", ".join([str(f) + " TEXT" for f in relation.fields]))
+    return sql
