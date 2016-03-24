@@ -24,11 +24,21 @@ if __name__ == '__main__':
 
         target_sql = generate_target(target)
 
-        print("Executing the following code on", database, "...")
+        print("/* Executing the following code on", database, "... */")
         print(target_sql)
         print(sql)
+        
         conn = sqlite3.connect(database)
+        c = conn.cursor()
+
+        for line in target_sql.split(';'):
+            c.execute(line)
+        for line in sql.split(';'):
+            c.execute(line)
+        conn.commit()
         conn.close()
+        print()
+        print("/* Done !*/")
         
         
     else:
