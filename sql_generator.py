@@ -85,5 +85,6 @@ def generate_sql(mappings):
 def generate_target(target):
     sql = ""
     for relation in target:
+        sql += "DROP TABLE IF EXISTS " + relation.name + ";\n"
         sql += "CREATE TABLE %s (%s);\n" % (relation.name, ", ".join([str(f) + " TEXT" for f in relation.fields]))
     return sql
