@@ -1,4 +1,6 @@
 \documentclass[a4paper,11pt]{article}
+\usepackage[margin=2.5cm]{geometry}
+
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -15,9 +17,9 @@ Project report}
 \section{Introduction}
 \textit{Tidjidiss} project is a Python implementation of a tiny SQL-based exchange engine.
 
-This engine takes as input some database, which structure follows a \textit{source schema}. It transforms this database into a new one, which structure must follows a \textit{target schema}. The correspondance between source and target data is made using a set of first order formulas, which impose some relations and constraints over the data of target database. These formulas are called \textit{source-to-target tuple-generating dependencies} (s-t tgds).
+This engine takes as input some database, which structure follows a \textit{source schema}. It transforms this database into a new one, which structure must follows a \textit{target schema}. The correspondence between source and target data is made using a set of first order formulas, which impose some relations and constraints over the data of target database. These formulas are called \textit{source-to-target tuple-generating dependencies} (s-t tgds).
 
-It is a SQL-based engine, which means that it generates the SQL code transforming the source database into the target one. It also have an integrated mode, that directly interacts with some SQLite database and perform the transformation.
+It is a SQL-based engine, which means that it generates the SQL code transforming the source database into the target one. It also have an integrated mode, that directly interacts with some SQLite database and performs the transformation.
 
 \section{Usage}
 First of all, you need to install the library \textit{ply} by running \texttt{pip3 install ply} in root (or \texttt{sudo pip3 install ply}).
@@ -31,15 +33,36 @@ To run the sqlite3 integration, just use the \texttt{-sqlite3} argument followed
 It will print and execute the generated script on the database, which must contains tables following the \textit{source} schema.
 
 \section{Data structures}
+The following data structures are used in this implementation:
+\begin{description}
+  \item[Relation]: It is a simple relation: with a name and some fields (identified by their names).
+  \item[Schema]: A list of relations.
+  \item[RelationInstance]: A \texttt{RelationInstance} is a relation used in a mapping: its fields are replaced by variables. This object has a pointer to a relation and a list of variables.
+  \item[Mapping]: Mapping has left hand side (\texttt{lhs}) and right hand side (\texttt{rhs}), which are lists of \texttt{RelationInstance}.
+  \item[SkolemTerm]: A term in skolemized form.
+  \item[SkolemizedMapping]: Like Mapping, but using skolemized terms.
+\end{description}
+
 \section{Parsing of the input}
-The input is a file formatted in a specific format, defined a precise grammar in the assignment. To parse this input, we use a python implementation of lex/yacc. Two files are here fot the parsing :
-\begin{itemize} 
-  \item [lexer.py] : it creates the stream of tokens, using regular expression to detect trivial expressions (such as keywords, commas, arrows, names, variables,... ). 
-  \item [input\_parser.py] : it parses the token flow using the given grammars, and fill the data structures defined below with the data of the input file. 
-\end{itemize} 
+The input is a file formatted in a specific format, defined a precise grammar in the assignment. To parse this input, we use a python implementation of lex/yacc. Two files performs the parsing:
+\begin{description} 
+  \item [lexer.py]: it creates the tokens flow, using regular expression to detect trivial expressions (such as keywords, commas, arrows, names, variables,... ). 
+  \item [input\_parser.py]: it parses the tokens flow using the given grammars, and fill the data structures \texttt{RelationInstance} and \texttt{Mapping} defined below with the data of the input file. 
+\end{description} 
 
 \section{Skolemisation}
+Function \texttt{skolemize} of \texttt{skolemization} module performs the search of existentially quantified variables in the right-hand side of mapping. It creates an instance of \texttt{SkolemizedMapping} class, which preserves the information about existential variable name, mapping identifier and the universal variables it depends on. 
+
+In the current implementation, skolem terms depend on all universal variables found in left-hand side, so there exist some redundancy. After scolemization tgds are ready for transformation into SQL insert statement.
+
 \section{SQL generation}
+Module \texttt{sql\_generation} includes functions that giving a set of mappings transform it into a set of SQL insertion statements for instances of new relations in the mappings' right-hand side conjunctions.
+
+For each tgd and for each such instance the mapping between variables and pairs of relation/field is found using function \texttt{find\_named\_variables}. So the attributes to select are generated from these mapping.
+
+The tables to join and join keys are as well generated from this mapping. If the variable contains more than one relation/field pair, these pairs are considered as tables to join.
+
 \section{sqlite3 integration}
+First, the SQL code creating the \textit{target} tables is created. Then, this SQL and the one from the exchange engine are executed on the database using the \texttt{sqlite3} package of python. 
 
 \end{document}
