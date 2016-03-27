@@ -83,6 +83,7 @@ def generate_sql(mappings):
 
 
 def generate_target(target):
+    """Generates the CREATE TABLE statements for target tables."""
     sql = ""
     for relation in target:
         sql += "DROP TABLE IF EXISTS " + relation.name + ";\n"

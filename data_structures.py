@@ -10,7 +10,7 @@ class Schema(list):
 
 
 class Relation:
-    """Datastructure of relation."""
+    """Datastructure of a relation."""
 
     def __init__(self, name, attributes):
         """Input name of relation and fields (attributes)."""
@@ -19,7 +19,7 @@ class Relation:
 
 
 class RelationInstance:
-    """Datastructure of relation instance (used in mappings)."""
+    """Datastructure of a relation instance (used in mappings)."""
 
     def __init__(self, relation, variables):
         """Initialize the relation instance.

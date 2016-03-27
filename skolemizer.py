@@ -22,9 +22,7 @@ def skolemize(mappings):
             skol_variables = []
             for var in instance.variables:
                 if var not in universal_variables:
-                    # TODO: now we make skolem term depend on all universal
-                    # variables but later change to depend only ones from rhs
-                    # ORDER OF ARGUMENTS IS NOT PRESERVED
+                    # now we make skolem term depend on all universal
                     skol_term = SkolemTerm(
                         "m%d" % (i + 1), var, universal_variables)
                     skol_variables.append(skol_term)

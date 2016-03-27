@@ -1,3 +1,14 @@
+"""Final script of the engine.
+
+Execute the script tidjidiss.py by running python3 tidjidiss.py. It
+takes in the input file in the standard input, so you could give to it an input file using command line:
+  python3 tidjidiss.py < examples/example-input-file.txt
+The output is the generated SQL script.
+To run the sqlite3 integration, just use the -sqlite3 argument followed by the name of the database:
+  python3 tidjidiss.py -sqlite3 database.db < examples/example-input-file.txt
+It will print and execute the generated script on the database, which must contains tables following the source schema.
+"""
+
 from sys import argv, stdin
 import sqlite3
 
