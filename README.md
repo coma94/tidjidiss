@@ -12,13 +12,15 @@ with some SQLite database and performs the transformation.
 
 ### Requirements
 
-`ply`
+```ply
+```
 
 ### Input format examples
 
 Example of input format:
 
-`SOURCE
+```
+SOURCE
 hasjob(Person, Field)
 teaches(Professor, Course)
 inField(Course, Field)
@@ -32,18 +34,23 @@ area(Project, Field)
 MAPPING
 hasjob($i, $f) -> works($i, $p), area($p, $f).
 teaches($i, $c), inField($c, $f) -> works($i, $p), area($p, $f).
-get($i, $g), forGrant($g, $p) -> works($i, $p).`
+get($i, $g), forGrant($g, $p) -> works($i, $p).
+```
 
 
 ### Usage
 
 Script `tidjidiss.py` generates SQL script, it takes on the input file in the standard input, so you could give to it an input file using command line:
 
-`python tidjidiss.py < examples/example-input-file.txt`
+```
+python tidjidiss.py < examples/example-input-file.txt
+```
 
 To run the sqlite3 integration, just use the `-sqlite3` argument followed by the name of the
 database:
-`python tidjidiss.py -sqlite3 database.db < examples/example-input-file.txt`
+```
+python tidjidiss.py -sqlite3 database.db < examples/example-input-file.txt
+```
 
 It will print and execute the generated script on the database, which must contains tables
 following the source schema.
