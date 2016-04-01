@@ -12,7 +12,8 @@ with some SQLite database and performs the transformation.
 
 ### Requirements
 
-```ply
+```
+ply
 ```
 
 ### Input format examples
